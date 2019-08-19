@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefHeight="499.0" prefWidth="1457.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControllerReport">
+   <children>
+      <Pane layoutX="11.0" layoutY="12.0" prefHeight="766.0" prefWidth="1573.0">
+         <children>
+            <TableView fx:id="tableTandem" layoutX="11.0" layoutY="101.0" prefHeight="583.0" prefWidth="1543.0">
+              <columns>
+                <TableColumn fx:id="msnColumn" prefWidth="82.39999008178711" text="MSN" />
+                <TableColumn fx:id="caColumn" prefWidth="94.39999389648438" text="CA" />
+                  <TableColumn fx:id="natcoTypeColumn" prefWidth="115.20005798339844" text="Natco Type" />
+                  <TableColumn fx:id="referenceColumn" prefWidth="125.5999755859375" text="Reference" />
+                  <TableColumn fx:id="commentColumn" prefWidth="224.80001831054688" text="Comment" />
+                  <TableColumn fx:id="conversationColumn" prefWidth="253.5999755859375" text="Conversation" />
+                  <TableColumn fx:id="myCommentColumn" prefWidth="249.60003662109375" text="MY COMMENT" />
+                  <TableColumn fx:id="detailedCommentColumn" prefWidth="252.0" text="DETAILED COMMENT" />
+                  <TableColumn fx:id="statusColumn" prefWidth="120.800048828125" text="STATUS" />
+              </columns>
+            </TableView>
+            <TextField fx:id="filterField" layoutX="60.0" layoutY="44.0" />
+            <Label fx:id="countLabel" layoutX="680.0" layoutY="713.0" prefHeight="17.0" prefWidth="168.0" textAlignment="CENTER" />
+            <Rectangle fx:id="exportRectangle" arcHeight="5.0" arcWidth="5.0" fill="#7a787800" height="49.0" layoutX="1500.0" layoutY="19.0" stroke="#a4a2a2" strokeType="INSIDE" width="45.0" />
+            <ProgressIndicator fx:id="progressIndicator" layoutX="712.0" layoutY="60.0" prefHeight="69.0" prefWidth="62.0" />
+            <ImageView fx:id="export" fitHeight="34.0" fitWidth="32.0" layoutX="1507.0" layoutY="27.0" onMouseClicked="#exportReport" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="filterImage" fitHeight="40.0" fitWidth="39.0" layoutX="21.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="loadImage" fitHeight="40.0" fitWidth="45.0" layoutX="346.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
+            <ComboBox fx:id="comboBox" layoutX="399.0" layoutY="45.0" onAction="#reFillData" prefWidth="150.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
