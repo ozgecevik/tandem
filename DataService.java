@@ -37,8 +37,31 @@ public class DataService {
 	private ArrayList<TandemData> remainSameData;
 
 	private static DataService instance;
+	
+	private Integer MSN_COLUMN_INDEX_RAW;
+	private Integer CA_COLUMN_INDEX_RAW;
+	private Integer NATCOTYPE_COLUMN_INDEX_RAW;
+	private Integer REFERENCE_COLUMN_INDEX_RAW;
+	private Integer DESCRIPTION_COLUMN_INDEX_RAW;
+	private Integer COMMENT_COLUMN_INDEX_RAW;
+	private Integer OLDCONVERSATION_COLUMN_INDEX_RAW;
+	private Integer CONVERSATION_COLUMN_INDEX_RAW;
+	
+	private Integer MSN_COLUMN_INDEX_MAIN;
+	private Integer CA_COLUMN_INDEX_MAIN;
+	private Integer NATCOTYPE_COLUMN_INDEX_MAIN;
+	private Integer REFERENCE_COLUMN_INDEX_MAIN;
+	private Integer DESCRIPTION_COLUMN_INDEX_MAIN;
+	private Integer COMMENT_COLUMN_INDEX_MAIN;
+	private Integer OLDCONVERSATION_COLUMN_INDEX_MAIN;
+	private Integer CONVERSATION_COLUMN_INDEX_MAIN;
+	private Integer MYCOMMNET_COLUMN_INDEX_MAIN;
+	private Integer DETAILEDCOMMENT_COLUMN_INDEX_MAIN;
+	private Integer STATUS_COLUMN_INDEX_MAIN;
+	
 
 	private DataService() {
+		
 	}
 
 	public static DataService getInstance() {
@@ -80,7 +103,11 @@ public class DataService {
 
 		// Find number of rows in excel file
 		int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
-
+		
+		//find column index
+		findColumnIndexRAWdata(sheet);
+		
+		
 		// Create a loop over all the rows of excel file to read it
 		for (int i = 1; i < rowCount + 1; i++) {
 			Row row = sheet.getRow(i);
@@ -124,6 +151,63 @@ public class DataService {
 		}
 	}
 
+	private void findColumnIndexRAWdata(Sheet sheet) {
+		//find column indexes
+		Row row = sheet.getRow(1);
+		int colCount = sheet.getRow(0).getLastCellNum();
+		for (int i = 0; i < colCount; i++) {
+			
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("MSN"))
+				this.MSN_COLUMN_INDEX_RAW = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("CONSTITUENT ASSEMBLY (CA)")) 
+				this.CA_COLUMN_INDEX_RAW = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("NATCO TYPE")) 
+				this.NATCOTYPE_COLUMN_INDEX_RAW = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("REFERENCE"))
+				this.REFERENCE_COLUMN_INDEX_RAW	= i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("DESCRIPTION"))
+				this.COMMENT_COLUMN_INDEX_RAW = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("COMMENT"))
+				this.OLDCONVERSATION_COLUMN_INDEX_RAW = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("CONVERSATION"))
+				this.CONVERSATION_COLUMN_INDEX_RAW = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("MY COMMENT"))
+				this.DESCRIPTION_COLUMN_INDEX_RAW =	i;			
+			}
+	}
+	
+	private void findColumnIndexMAINdata(Sheet sheet) {
+		//find column indexes
+		Row row = sheet.getRow(1);
+		int colCount = sheet.getRow(0).getLastCellNum();
+		for (int i = 0; i < colCount; i++) {
+			
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("MSN"))
+				this.MSN_COLUMN_INDEX_MAIN = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("CONSTITUENT ASSEMBLY (CA)")) 
+				this.CA_COLUMN_INDEX_MAIN = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("NATCO TYPE")) 
+				this.NATCOTYPE_COLUMN_INDEX_MAIN = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("REFERENCE"))
+				this.REFERENCE_COLUMN_INDEX_MAIN	= i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("DESCRIPTION"))
+				this.COMMENT_COLUMN_INDEX_MAIN = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("COMMENT"))
+				this.OLDCONVERSATION_COLUMN_INDEX_MAIN = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("CONVERSATION"))
+				this.CONVERSATION_COLUMN_INDEX_MAIN = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("MY COMMENT"))
+				this.DESCRIPTION_COLUMN_INDEX_MAIN =	i;			
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("DETAILED COMMENT"))
+				this.MYCOMMNET_COLUMN_INDEX_MAIN = i;					
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("STATUS"))
+				this.STATUS_COLUMN_INDEX_MAIN = i;
+			if(row.getCell(i).getStringCellValue().toUpperCase().contains("DETAILED COMMENT"))
+				this.DETAILEDCOMMENT_COLUMN_INDEX_MAIN = i;
+		}
+	}
+
+
 	public void readMainData(File mainTandem) throws IOException {
 
 		this.mainDataList = new ArrayList<TandemData>();
@@ -161,6 +245,9 @@ public class DataService {
 		// Find number of rows in excel file
 		int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
 
+		//read column index
+		findColumnIndexMAINdata(sheet);
+		
 		// Create a loop over all the rows of excel file to read it
 		for (int i = 1; i < rowCount + 1; i++) {
 			Row row = sheet.getRow(i);

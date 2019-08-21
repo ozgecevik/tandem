@@ -15,9 +15,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -88,6 +90,15 @@ public class Controller implements Initializable {
 		List<File> files = event.getDragboard().getFiles();
 		mainTandem = files.get(0);
 //    	   JOptionPane.showMessageDialog(null, files.get(0).getName(), "Tolga", JOptionPane.INFORMATION_MESSAGE);
+		String fileExtensionName = mainTandem.getName().substring(mainTandem.getName().indexOf("."));
+		if(!fileExtensionName.equals(".xlsx") || !fileExtensionName.equals(".xls")) {
+			mainTandem = null;
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Message");
+			alert.setHeaderText("File format is wrong!");
+			alert.setContentText("Only excel format is accepted");
+			alert.show();
+		}
 		Image img = new Image("/etc/excel.png");
 		importMainImage.setImage(img);
 		labelMain.setText(files.get(0).getName());
@@ -103,6 +114,15 @@ public class Controller implements Initializable {
 	private void handleDragOverRaw(DragEvent event) {
 		List<File> files = event.getDragboard().getFiles();
 		rawTandem = files.get(0);
+		String fileExtensionName = rawTandem.getName().substring(rawTandem.getName().indexOf("."));
+		if(!fileExtensionName.equals(".xlsx") || !fileExtensionName.equals(".xls")) {
+			rawTandem = null;
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Message");
+			alert.setHeaderText("File format is wrong!");
+			alert.setContentText("Only excel format is accepted");
+			alert.show();
+		}
 		Image img = new Image("/etc/excel.png");
 		importRawImage.setImage(img);
 		labelRaw.setText(files.get(0).getName());
@@ -111,6 +131,25 @@ public class Controller implements Initializable {
 
 	@FXML
 	private void update() {
+		
+		if(mainTandem == null || rawTandem == null) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Message");
+			alert.setHeaderText("Missing file(s)!");
+			alert.setContentText("Please import the files");
+			alert.show();
+			return;
+			
+	
+		
+		}else if(mainTandem. || rawTandem == null) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Message");
+			alert.setHeaderText("Missing file(s)!");
+			alert.setContentText("Please import the files");
+			alert.show();
+			return;
+		}
 
 		Task<Void> task = new updateTask();
 
@@ -164,7 +203,7 @@ public class Controller implements Initializable {
 		}
 
 		@Override
-		protected Void call() throws Exception {
+		protected Void call() {
 
 			try {
 				// read raw data and main data
@@ -177,9 +216,14 @@ public class Controller implements Initializable {
 				// update main excel
 				DataService.getInstance().updateMainExcel(mainTandem);
 
-			} catch (IOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Message");
+				alert.setHeaderText("Error Occured!");
+				alert.setContentText(e.getMessage());
+				alert.show();
 			}
 			return null;
 		}
